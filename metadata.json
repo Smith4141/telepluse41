@@ -1,0 +1,6 @@
+{
+  "name": "TelePulse Enterprise CRM & Telegram Bulk Messaging",
+  "description": "Enterprise-grade Telegram bulk messaging and CRM platform with WordPress CMS integration, custom API webhooks, automated scheduling, phone number filtering, real-time analytics, and live chat.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
