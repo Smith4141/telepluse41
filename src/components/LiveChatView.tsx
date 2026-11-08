@@ -75,7 +75,7 @@ export const LiveChatView: React.FC<LiveChatViewProps> = ({
   const [chatSearch, setChatSearch] = useState('');
   const [chatInputText, setChatInputText] = useState('');
   const [isCustomerTyping, setIsCustomerTyping] = useState(false);
-  const [autoReplyEnabled, setAutoReplyEnabled] = useState(true);
+  const [autoReplyEnabled, setAutoReplyEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -258,14 +258,19 @@ export const LiveChatView: React.FC<LiveChatViewProps> = ({
 
           <button
             onClick={() => setAutoReplyEnabled(!autoReplyEnabled)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors flex items-center gap-1.5 ${
               autoReplyEnabled
-                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
-                : 'bg-neutral-100 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-neutral-400'
+                ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300'
+                : 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
             }`}
+            title={autoReplyEnabled ? 'কৃত্রিম স্বয়ংক্রিয় উত্তর চালু আছে' : 'স্বয়ংক্রিয় কৃত্রিম উত্তর বন্ধ আছে'}
           >
             <Bot className="w-3.5 h-3.5" />
-            <span>{autoReplyEnabled ? (lang === 'bn' ? 'অটো-সিমুলেটর চালু' : 'Simulator Active') : (lang === 'bn' ? 'সিমুলেটর বন্ধ' : 'Simulator OFF')}</span>
+            <span>
+              {autoReplyEnabled
+                ? (lang === 'bn' ? '⚠️ ডেমো সিমুলেটর চালু' : 'Simulator Active')
+                : (lang === 'bn' ? '✓ রিয়েল মোড (সিমুলেটর বন্ধ)' : 'Real Mode (Simulator OFF)')}
+            </span>
           </button>
         </div>
       </div>
@@ -382,6 +387,27 @@ export const LiveChatView: React.FC<LiveChatViewProps> = ({
               </div>
             </div>
           ) : null}
+
+          {/* Context Guidance Banner */}
+          <div className="bg-amber-50/90 dark:bg-amber-950/40 border-b border-amber-200/80 dark:border-amber-900/60 px-4 py-2 text-[11px] text-amber-900 dark:text-amber-200 flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-amber-800 dark:text-amber-300">💡 {lang === 'bn' ? 'নোট:' : 'Notice:'}</span>
+              <span>
+                {lang === 'bn'
+                  ? 'এটি সাপোর্ট ইনবক্স/ডেমো টেস্ট ভিউ। টার্গেটেড নম্বরে বাল্ক মেসেজ পাঠাতে বাম পাশের "Broadcast Campaigns" অথবা ওয়ার্ডপ্রেস প্লাগিনের "🚀 লাইভ সেন্ডার" ব্যবহার করুন।'
+                  : 'This is the Support Inbox view. To broadcast live messages to phone numbers, use "Broadcast Campaigns" or the WordPress plugin "Live Sender".'}
+              </span>
+            </div>
+            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+              autoReplyEnabled
+                ? 'bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-900/70 dark:text-amber-200'
+                : 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-900/70 dark:text-emerald-200'
+            }`}>
+              {autoReplyEnabled
+                ? (lang === 'bn' ? '⚠️ ডেমো অটো-উত্তর চালু' : 'Demo Auto-Reply ON')
+                : (lang === 'bn' ? '✓ লাইভ মোড (অটো-উত্তর বন্ধ)' : 'Live Mode (Auto-Reply OFF)')}
+            </span>
+          </div>
 
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3.5 bg-neutral-50/20 dark:bg-neutral-950/20">

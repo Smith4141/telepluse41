@@ -336,7 +336,8 @@ export default function App() {
   };
 
   // Live Chat Handlers
-  const handleSendMessage = (contactId: string, text: string) => {
+  const handleSendMessage = async (contactId: string, text: string) => {
+    const contact = contacts.find((c) => c.id === contactId);
     const newMsg: ChatMessage = {
       id: `m_${Date.now()}`,
       contactId,
@@ -352,7 +353,27 @@ export default function App() {
       [contactId]: [...(prev[contactId] || []), newMsg],
     }));
 
-    // Trigger simulated contact acknowledgment after 2 seconds
+    // If real Telegram Bot token is configured, attempt real dispatch
+    if (botConfig?.botToken) {
+      const targetChatId = (contact as any)?.telegramChatId || (contact?.telegramUsername ? contact.telegramUsername.replace(/^@/, '') : '');
+      if (targetChatId) {
+        try {
+          await fetch('/api/bot/send-message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              botToken: botConfig.botToken,
+              chatId: targetChatId,
+              text,
+            }),
+          });
+        } catch (e) {
+          console.warn('Real bot dispatch in Live Chat failed:', e);
+        }
+      }
+    }
+
+    // Acknowledge sent status
     setTimeout(() => {
       setChats((prev) => {
         const contactMsgs = prev[contactId] || [];
@@ -361,7 +382,7 @@ export default function App() {
           [contactId]: contactMsgs.map((m) => (m.id === newMsg.id ? { ...m, status: 'read' as const } : m)),
         };
       });
-    }, 2000);
+    }, 1500);
   };
 
   const handleSimulateInboundMessage = (contactId: string, incomingText: string) => {

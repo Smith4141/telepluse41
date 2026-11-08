@@ -10,6 +10,15 @@ const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
+// Enable CORS and allow cross-origin framing
+app.use((req, res, next) => {
+  res.removeHeader('X-Frame-Options');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 // In-memory MTProto state and session storage file
 const SESSION_FILE_PATH = path.resolve(process.cwd(), '.mtproto-session.json');
 
@@ -621,8 +630,16 @@ app.post('/api/bot/get-subscribers', async (req: Request, res: Response) => {
   }
 
   try {
-    const tgRes = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`);
-    const data = await tgRes.json();
+    let tgRes = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`);
+    let data = await tgRes.json();
+
+    // Auto-Recovery: If webhook is active, delete webhook and retry getUpdates
+    if (!data.ok && data.description && data.description.toLowerCase().includes('webhook is active')) {
+      await fetch(`https://api.telegram.org/bot${token}/deleteWebhook?drop_pending_updates=false`);
+      tgRes = await fetch(`https://api.telegram.org/bot${token}/getUpdates?limit=100`);
+      data = await tgRes.json();
+    }
+
     if (data.ok) {
       const subscribers: Array<{ chatId: string; name: string; username?: string; type: string }> = [];
       const seen = new Set<string>();
@@ -657,6 +674,21 @@ app.post('/api/bot/get-subscribers', async (req: Request, res: Response) => {
       success: false,
       error: err.message,
     });
+  }
+});
+
+// Explicit delete Telegram Bot Webhook endpoint
+app.post('/api/bot/delete-webhook', async (req: Request, res: Response) => {
+  const { token } = req.body;
+  if (!token) {
+    return res.status(400).json({ error: 'Token is required.' });
+  }
+  try {
+    const r = await fetch(`https://api.telegram.org/bot${token}/deleteWebhook?drop_pending_updates=true`);
+    const data = await r.json();
+    return res.json(data);
+  } catch (err: any) {
+    return res.status(500).json({ ok: false, error: err.message });
   }
 });
 

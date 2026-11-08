@@ -3,22 +3,24 @@ Contributors: telepulse
 Tags: telegram, crm, bulk sms, woocommerce, contact management, live chat, mtproto
 Requires at least: 5.4
 Tested up to: 6.7
-Stable tag: 2.1.0
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Standalone Telegram Marketing, Bulk Dispatcher & Phone Number Filter for WordPress. Pre-configured with Telegram Core MTProto (App API ID: 37979808, API Hash: 8ed857b64a55e9aa61468ab6b2fa6240) for immediate live messaging on localhost and live servers with zero external setup.
+Standalone Telegram & Mobile SMS Marketing, Bulk Dispatcher & Phone Number Filter for WordPress. Pre-configured with Telegram Core MTProto (App API ID: 37979808, API Hash: 8ed857b64a55e9aa61468ab6b2fa6240), Excel Importer and Direct Mobile SMS Gateway for immediate live messaging to any phone number.
 
 == Description ==
 
-TelePulse CRM একটি স্বতন্ত্র কম্পিউটার প্রোগ্রামের মতোই কাজ করে। এটি প্লাগইনটির ভেতরেই আগে থেকে কনফিগার করা থাকে। কোনো প্রকার এক্সটার্নাল এপিআই কনফিগার করার প্রয়োজন ছাড়াই প্লাগইনটি ইনস্টল করার সাথে সাথে আপনি ফিল্টার করা নম্বরগুলোতে সরাসরি ব্যাক-এন্ড থেকে লাইভ মেসেজ পাঠাতে পারবেন।
+TelePulse CRM একটি স্বতন্ত্র কম্পিউটার প্রোগ্রামের মতোই কাজ করে। এটি প্লাগইনটির ভেতরেই আগে থেকে কনফিগার করা থাকে। কোনো প্রকার এক্সটার্নাল এপিআই কনফিগার করার প্রয়োজন ছাড়াই প্লাগইনটি ইনস্টল করার সাথে সাথে আপনি এক্সেল শিট থেকে নম্বর ইমপোর্ট করে যেকোনো নম্বরে সরাসরি মোবাইল SMS ও টেলিগ্রাম মেসেজ পাঠাতে পারবেন।
 
 = মূল বৈশিষ্ট্যসমূহ (Key Features) =
-* **প্রি-কনফিগার করা টেলিগ্রাম কোর এপিআই:** App api_id: `37979808` এবং App api_hash: `8ed857b64a55e9aa61468ab6b2fa6240` আগে থেকেই প্লাগইন কোডে সক্রিয় করা।
+* **📊 সরাসরি এক্সেল বা CSV ফাইল ইমপোর্ট:** .xlsx, .xls, .csv ফাইল সরাসরি আপলোড করুন এবং এক ক্লিকে সব মোবাইল নম্বর লোড করে মেসেজ পাঠান।
+* **📱 সরাসরি মোবাইল SMS গেটওয়ে:** যেকোনো নম্বরে সরাসরি GSM মোবাইল SMS পাঠান (Greenweb, Onnorokom, BulkSMSBD, অথবা আপনার নিজস্ব অ্যান্ড্রয়েড সিম গেটওয়ে দিয়ে)।
+* **⚡ প্রি-কনফিগার করা টেলিগ্রাম কোর এপিআই:** App api_id: `37979808` এবং App api_hash: `8ed857b64a55e9aa61468ab6b2fa6240` আগে থেকেই প্লাগইন কোডে সক্রিয় করা।
 * **লাইভ মেসেজ সেন্ডার (Live Dispatcher):** ফিল্টার করা নম্বরগুলোতে রিয়েল-টাইম প্রোগ্রেস বার এবং লাইভ টার্মিনাল এক্সিকিউশন লগ সহ মেসেজ ব্রডকাস্ট করুন।
 * **অ্যান্টি-ব্যান প্রটেকশন (Anti-Ban Protection):** প্রতিটি মেসেজের মাঝে ২ থেকে ১৫ সেকেন্ডের বিরতি দিয়ে অ্যাকাউন্ট সম্পূর্ণ নিরাপদ রাখুন।
-* **নম্বর ফিল্টারিং ও ক্লিনার (Number Validator):** র যেকোনো ফরম্যাটের নম্বর ক্লিন করুন, ডুপ্লিকেট বাদ দিন, এবং এক ক্লিকে লাইভ সেন্ডারে ট্রান্সফার করুন।
+* **নম্বর ফিল্টারিং ও ক্লিনার (Number Validator):** যেকোনো ফরম্যাটের নম্বর ক্লিন করুন, ডুপ্লিকেট বাদ দিন, এবং এক ক্লিকে লাইভ সেন্ডারে ট্রান্সফার করুন।
 * **WooCommerce ও ফর্ম অটোমেশন:** WooCommerce অর্ডার সম্পন্ন হলে স্বয়ংক্রিয়ভাবে গ্রাহকের টেলিগ্রামে মেসেজ পাঠানো।
 * **১০০% স্ট্যান্ডঅ্যালন:** লোকালহোস্ট (Localhost / XAMPP / LocalWP) বা যেকোনো লাইভ ওয়ার্ডপ্রেস সার্ভারে কোনো বাহ্যিক নোডজেএস ডিপেনডেন্সি ছাড়াই সরাসরি চলে।
 
